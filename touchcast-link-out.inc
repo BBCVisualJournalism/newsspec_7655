@@ -2,8 +2,8 @@
     function browserIsWorthyOfTouchcast () {
         return (
             (document.body.clientWidth >= 305) &&
-            (window.matchMedia) && 
-            (Function.prototype.bind) && 
+            (window.matchMedia) &&
+            (Function.prototype.bind) &&
             !(/Ovi|Symbian|Opera Mini/.test(navigator.userAgent))
         ) ||
         (/IE9/.test(navigator.userAgent));
@@ -12,3 +12,4 @@
         document.write('<' + 'a href="//bbc-vip.touchcast.com/embed/--TOUCHCAST_ID--" class="touchcast-holder" target="_blank"><img src="--IMAGE_URL--" /></a' + '>');
     }
 </script>
+<p><strong>When you have finished watching, return to this page to vote.</strong></p>
