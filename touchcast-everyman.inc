@@ -9,6 +9,6 @@
         (/IE9/.test(navigator.userAgent));
     }
     if (browserIsWorthyOfTouchcast() && window.innerWidth > 1024){
-        document.write('<' + 'a href="//bbc-vip.touchcast.com/embed/--TOUCHCAST_ID--" class="touchcast-holder" target="_blank"><img src="/touchcast_everyman.jpg" /></a' + '>');
+        document.write('<' + 'a href="//bbc-vip.touchcast.com/embed/--TOUCHCAST_ID--" class="touchcast-holder" target="_blank"><' + 'img src="http://news.bbcimg.co.uk/news/special/2014/newsspec_7655/img/touchcast_everyman.jpg" /' + '></a' + '>');
     }
 </script>
