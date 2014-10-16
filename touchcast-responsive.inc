@@ -44,7 +44,7 @@
 
     /* Tell the user to rotate their screen */
     function displayToSmallText() {
-        document.getElementById('touchcast-container').innerHTML = 'Your browser width is to small to view the touchcast video. Please increase the browser width or use a different device.';
+        document.getElementById('touchcast-container').innerHTML = 'Your browser width is too small to view the touchcast video. Please increase the browser width or use a different device.';
     }
 
     function displayTouchcastHolder () {
