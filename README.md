@@ -1,4 +1,4 @@
-Newspsec 7655: Touchast includes
+Newspsec 7655: Touchcast includes
 ================================
 
 This project allows journalists to include touchcast promos into a CPS/Topcat page.
