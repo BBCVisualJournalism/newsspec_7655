@@ -1,0 +1,1 @@
+<a href="http://bbc-vip.touchcast.com/bbc/--TOUCHCAST_ID--&autoplay=1" class="touchcast-holder" target="_blank"><img src="--IMAGE_URL--" /></a><p><strong>When you have finished watching, return to this page to vote. We are aware that this interactive video may not work on some older browsers. You can find a non-interactive version of the content below.</strong></p>
