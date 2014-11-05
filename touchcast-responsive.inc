@@ -2,12 +2,32 @@
 <!--#set var="TOUCHCAST_ID" value="$1" -->
 <!--#set var="IMAGE_URL" value="$2" -->
 
+<!--#if expr="$QUERY_STRING = /service=([a-zA-Z]+)/" -->
+    <!--#set var="SERVICE" value="$1" -->
+<!--#else -->
+    <!--#set var="SERVICE" value="en" -->
+<!--#endif -->
+
 <div id="touchcast-container"></div>
 <script>
     /*! viewportSize | Author: Tyson Matanich, 2013 | License: MIT */
     (function(n){n.viewportSize={},n.viewportSize.getHeight=function(){return t("Height")},n.viewportSize.getWidth=function(){return t("Width")};var t=function(t){var f,o=t.toLowerCase(),e=n.document,i=e.documentElement,r,u;return n["inner"+t]===undefined?f=i["client"+t]:n["inner"+t]!=i["client"+t]?(r=e.createElement("body"),r.id="vpw-test-b",r.style.cssText="overflow:scroll",u=e.createElement("div"),u.id="vpw-test-d",u.style.cssText="position:absolute;top:-1000px",u.innerHTML="<style>@media("+o+":"+i["client"+t]+"px){body#vpw-test-b div#vpw-test-d{"+o+":7px!important}}<\/style>",r.appendChild(u),i.insertBefore(r,e.head),f=u["offset"+t]==7?i["client"+t]:n["inner"+t],i.removeChild(r)):f=n["inner"+t],f}})(this);
 
     var minWidth = 976;
+    var serviceId = '<!--#echo var="SERVICE" -->';
+
+    var textValues = [];
+    textValues['en'] = {
+        desc: 'When you have finished watching, return to this page to vote. You can find the non-interactive version of this content below.',
+        noSupport: 'Your browser does not support this interactive video.'
+    };
+    textValues['fr'] = {
+        desc: 'If I spoke another language this would be better...',
+        noSupport: 'Your browser does not support this interactive video.'
+    };
+
+    var currentLangText = (serviceId in textValues) ? textValues[serviceId] : textValues['en'];
+
 
     function getViewPort (){
         return {
@@ -26,52 +46,25 @@
         (/IE 9/.test(navigator.userAgent));
     }
 
-    function wouldBeWorthyIfRotated () {
-        return (
-            (getViewPort().height >= minWidth) &&
-            (typeof window.orientation !== 'undefined')&&
-            (window.matchMedia) &&
-            (Function.prototype.bind) &&
-            !(/Ovi|Symbian|Opera Mini/.test(navigator.userAgent))
-        ) ||
-        (/IE 9/.test(navigator.userAgent));
-    }
-
-    /* Tell the user to rotate their screen */
-    function displayRotateText() {
-        document.getElementById('touchcast-container').innerHTML = '<span class="touchcast-rotate">Rotate your device to view the touchcast video</span>';
-    }
-
     /* Tell the user to rotate their screen */
     function displayToSmallText() {
-        document.getElementById('touchcast-container').innerHTML = 'Your browser width is too small to view the touchcast video. Please increase the browser width or use a different device.';
+        document.getElementById('touchcast-container').innerHTML = currentLangText.noSupport;
     }
 
     function displayTouchcastHolder () {
-        document.getElementById('touchcast-container').innerHTML = '<a href="http://bbc-vip.touchcast.com/bbc/<!--#echo var="TOUCHCAST_ID" -->&autoplay=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>When you have finished watching, return to this page to vote. You can find the non-interactive version of this content below.</strong></p>';
+        document.getElementById('touchcast-container').innerHTML = '<a href="http://bbc-vip.touchcast.com/bbc/<!--#echo var="TOUCHCAST_ID" -->?autoplay=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>' + currentLangText.desc + '</strong></p>';
     }
 
     function conditionallyDisplayTouchcast () {
         if (browserIsWorthyOfTouchcast()){
             displayTouchcastHolder();
-        }else if(wouldBeWorthyIfRotated()){
-            displayRotateText();
         }else{
             displayToSmallText()
         }
     }
 
     conditionallyDisplayTouchcast();
-    window.addEventListener('orientationchange', conditionallyDisplayTouchcast);
 
-    /* Delayed resize, stops the browser from firing the conditionallyDisplayTouchcast() constantly while resizing */
-    var timer;
-    window.addEventListener("resize", function(){
-        if(timer) { window.clearTimeout(timer); }
-        timer = window.setTimeout(function() {
-            conditionallyDisplayTouchcast();
-        }, 50);
-    });
 
 </script>
 <!--#else -->
