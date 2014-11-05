@@ -39,16 +39,21 @@
 
     /* Tell the user to rotate their screen */
     function displayRotateText() {
-        document.getElementById('touchcast-container').innerHTML = '<span class="touchcast-rotate">Rotate your device to view the touchcast video</span>';
+        if(!document.querySelector('touchcast-rotate')) {
+            document.getElementById('touchcast-container').innerHTML = '<span class="touchcast-rotate"><p><strong>Rotate your device to view the touchcast video</strong></p></span>';
+        }
     }
 
-    /* Tell the user to rotate their screen */
     function displayToSmallText() {
-        document.getElementById('touchcast-container').innerHTML = 'Your browser width is too small to view the touchcast video. Please increase the browser width or use a different device.';
+        if(!document.querySelector('touchcast-increase')) {
+            document.getElementById('touchcast-container').innerHTML = '<p class="touchcast-increase"><strong>Your browser width is too small to view the touchcast video. Please increase the browser width or use a different device.</strong></p>';
+        }
     }
 
     function displayTouchcastHolder () {
-        document.getElementById('touchcast-container').innerHTML = '<a href="http://bbc-vip.touchcast.com/bbc/<!--#echo var="TOUCHCAST_ID" -->&autoplay=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>When you have finished watching, return to this page to vote. You can find the non-interactive version of this content below.</strong></p>';
+        if(!document.querySelector('touchcast-holder')) {
+            document.getElementById('touchcast-container').innerHTML = '<a href="http://bbc-vip.touchcast.com/bbc/<!--#echo var="TOUCHCAST_ID" -->&autoplay=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>When you have finished watching, return to this page to vote. You can find the non-interactive version of this content below.</strong></p>';
+        }
     }
 
     function conditionallyDisplayTouchcast () {
@@ -75,5 +80,9 @@
 
 </script>
 <!--#else -->
-    <!-- TOUCHCAST ID OR IMAGE URL NOT FOUND -->
+    <!--#if expr="$QUERY_STRING = /tcid=([a-zA-Z0-9_]+)/" -->
+        <!-- IMAGE URL NOT FOUND -->
+    <!--#else -->
+        <!-- TOUCHCAST ID NOT FOUND -->
+    <!--#endif -->
 <!--#endif -->
