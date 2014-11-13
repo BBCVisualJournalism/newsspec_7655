@@ -18,21 +18,15 @@
 
     var textValues = [];
     textValues['en'] = {
-        desc: 'When you have finished watching, return to this page to vote. You can find the non-interactive version of this content below.',
+        desc: 'You can find the non-interactive version of this content below.',
         noSupport: 'Your browser does not support this interactive video.'
     };
-    textValues['fr'] = {
-        desc: 'If I spoke another language this would be better...',
-        noSupport: 'Your browser does not support this interactive video.'
-    };
-
     var currentLangText = (serviceId in textValues) ? textValues[serviceId] : textValues['en'];
-
 
     function getViewPort (){
         return {
-            width: viewportSize.getWidth(),
-            height: viewportSize.getHeight()
+            width: window.innerWidth,
+            height: window.innerHeight
         }
     }
 
@@ -48,7 +42,7 @@
 
     /* Tell the user to rotate their screen */
     function displayToSmallText() {
-        document.getElementById('touchcast-container').innerHTML = currentLangText.noSupport;
+        document.getElementById('touchcast-container').innerHTML = '<p><strong>' + currentLangText.noSupport + '</strong></p>';
     }
 
     function displayTouchcastHolder () {
@@ -59,7 +53,7 @@
         if (browserIsWorthyOfTouchcast()){
             displayTouchcastHolder();
         }else{
-            displayToSmallText()
+            displayToSmallText();
         }
     }
 
@@ -68,5 +62,9 @@
 
 </script>
 <!--#else -->
-    <!-- TOUCHCAST ID OR IMAGE URL NOT FOUND -->
+    <!--#if expr="$QUERY_STRING = /tcid=([a-zA-Z0-9_]+)/" -->
+        <!-- IMAGE URL NOT FOUND -->
+    <!--#else -->
+        <!-- TOUCHCAST ID NOT FOUND -->
+    <!--#endif -->
 <!--#endif -->
