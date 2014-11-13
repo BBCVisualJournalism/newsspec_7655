@@ -25,8 +25,8 @@
 
     function getViewPort (){
         return {
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: viewportSize.getWidth(),
+            height: viewportSize.getHeight()
         }
     }
 
