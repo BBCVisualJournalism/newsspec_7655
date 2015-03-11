@@ -223,7 +223,6 @@
                 var width = getTouchcastWidth(),
                     height = getTouchcastHeight();
 
-                // touchcastContainer.innerHTML = '<a href="http://bbc-vip.touchcast.com/embed/<!--#echo var="TOUCHCAST_ID" -->?autoplay=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>' + currentLangText.desc + '</strong></p>';
                 touchcastContainer.innerHTML =
                     '<iframe src="http://bbc-vip.touchcast.com/embed/' +
                     '<!--#echo var="TOUCHCAST_ID" -->" ' +
@@ -259,9 +258,5 @@
         });
     </script>
 <!--#else -->
-    <!--#if expr="$QUERY_STRING = /tcid=([a-zA-Z0-9_]+)/" -->
-        <!-- IMAGE URL NOT FOUND -->
-    <!--#else -->
-        <!-- TOUCHCAST ID NOT FOUND -->
-    <!--#endif -->
+    <!-- TOUCHCAST ID NOT FOUND -->
 <!--#endif -->
