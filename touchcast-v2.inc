@@ -191,6 +191,7 @@
             $('body').addClass('full-width-mode');
 
             var minWidth = 768;
+            var useWhitelist = true; // Set to false to bypass browser whitelist
             var serviceId = '<!--#echo var="SERVICE" -->';
 
             var textValues = getTranslations()
@@ -205,6 +206,36 @@
                     !(/Ovi|Symbian|Opera Mini/.test(navigator.userAgent))
                 ) ||
                 (/IE /.test(navigator.userAgent) && /Trident\/[^345]/.test(navigator.userAgent) );
+            }
+
+            function browserIsWhitelisted () {
+                // Touchcast is broken on many old browsers, so we whitelist the
+                // versions we know are working fine.
+
+                if (!useWhitelist) return true;
+
+                var ua = navigator.userAgent;
+
+                // Chrome Desktop >= 30
+                if (!/Android/.test(ua) && /Chrome\/[^12]/.test(ua)) return true;
+
+                // Chrome Android or Android WebView >= 30
+                if (/Android.*Chrome\/[^12]/.test(ua)) return true;
+
+                // Firefox Desktop >=30, Windows or Macintosh
+                if (/\((Windows|Macintosh).*Gecko\/.*Firefox\/[^12]/.test(ua)) return true;
+
+                // Safari Desktop >= 6
+                if (/\(Macintosh.*Version\/[^12345].*Safari/.test(ua)) return true;
+
+                // Safari iOS, only iPad with iOS >= 8
+                if (/iPad.*OS [^X34567]/.test(ua)) return true;
+
+                // IE Desktop >= 10
+                if (/IE /.test(ua) && /Trident\/[^345]/.test(ua)) return true;
+
+                // No match found
+                return false;
             }
 
             function displayNotSupportedMsg() {
@@ -240,7 +271,7 @@
             }
 
             function conditionallyDisplayTouchcast () {
-                if (browserIsWorthyOfTouchcast()){
+                if (browserIsWorthyOfTouchcast() && browserIsWhitelisted()){
                     // Insert Touchcast IFRAME
                     displayTouchcast();
 
