@@ -243,8 +243,8 @@
                 // Chrome Desktop >= 30
                 if (!/Android/.test(ua) && /Chrome\/[^12]/.test(ua)) return true;
 
-                // Chrome Android or Android WebView >= 30
-                if (/Android.*Chrome\/[^12]/.test(ua)) return true;
+                // Chrome Android or Android WebView >= 40
+                if (/Android.*Chrome\/[^123]/.test(ua)) return true;
 
                 // Firefox Desktop >=30, Windows or Macintosh
                 if (/\((Windows|Macintosh).*Gecko\/.*Firefox\/[^12]/.test(ua)) return true;
