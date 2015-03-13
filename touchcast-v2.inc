@@ -8,6 +8,28 @@
         <!--#set var="SERVICE" value="en" -->
     <!--#endif -->
 
+
+    <style>
+    #responsive-news .column--primary {
+        width: 100%;
+    }
+    .touchcast-cta {
+        background: url(/news/special/2014/newsspec_7655/hand-icon.png) no-repeat;
+        color: #007f7f;
+        font-size: 1.5em;
+        font-weight: bold;
+        line-height: 48px;
+        margin-bottom: 10px;
+        padding-left: 58px;
+        text-transform: uppercase;
+    }
+    .touchcast-cta__span {
+        color: #050505;
+        font-size: 0.75em;
+        text-transform: initial;
+    }
+    </style>
+
     <div id="touchcast-container" style="margin-top: 1em"></div>
     <script>
         require(['jquery-1'], function ($) {
@@ -190,8 +212,10 @@
 
             $('body').addClass('full-width-mode');
 
+            /* CONFIG */
             var minWidth = 768;
             var useWhitelist = true; // Set to false to bypass browser whitelist
+            var ctaBanner = true; // Set to false to hide CTA banner
             var serviceId = '<!--#echo var="SERVICE" -->';
 
             var textValues = getTranslations()
@@ -252,9 +276,16 @@
 
             function displayTouchcast () {
                 var width = getTouchcastWidth(),
-                    height = getTouchcastHeight();
+                    height = getTouchcastHeight(),
+                    html = '';
 
-                touchcastContainer.innerHTML =
+                if (ctaBanner) html +=
+                    '<div class="touchcast-cta">Interactive Video ' +
+                    '<span class="touchcast-cta__span">' +
+                    'A new way of watching video – click or touch on the ' +
+                    'panels when they appear</span></div>';
+
+                html +=
                     '<iframe src="http://bbc-vip.touchcast.com/embed/' +
                     '<!--#echo var="TOUCHCAST_ID" -->" ' +
                     'style="width:' + width + 'px; height:' + height + 'px;" ' +
@@ -262,6 +293,8 @@
                     'frameborder="0" scrolling="no" allowfullscreen></iframe>' +
                     '<!-- <img src="<!--#echo var="IMAGE_URL" -->" /> -->' +
                     '<p><strong>' + currentLangText.desc + '</strong></p>';
+
+                touchcastContainer.innerHTML = html;
             }
 
             function resizeTouchcast() {
