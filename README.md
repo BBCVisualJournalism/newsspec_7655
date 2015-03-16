@@ -35,7 +35,7 @@ The touchcast ID needs to be passed in the querystring like this:
 You can additionally specify the translation by appending a `service` value:
 
 ```
-/news/special/2014/newsspec_7655/touchcast-v2.inc?tcid=XXX&service=XX
+/news/special/2014/newsspec_7655/touchcast-v2.inc?tcid=XXX&amp;service=XX
 
 ```
 
