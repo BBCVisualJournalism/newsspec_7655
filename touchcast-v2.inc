@@ -223,7 +223,7 @@
             var useWhitelist = true; // Set to false to bypass browser whitelist
             var ctaBanner = true; // Set to false to hide CTA banner
             var serviceId = '<!--#echo var="SERVICE" -->';
-            var displayMode = 'imageLink'; // options: 'iframe', 'imageLink'
+            var displayMode = 'iframe'; // options: 'iframe', 'imageLink'
 
             var textValues = getTranslations(),
                 currentLangText = (serviceId in textValues) ? textValues[serviceId] : textValues['en'],
@@ -236,7 +236,7 @@
                     (Function.prototype.bind) &&
                     !(/Ovi|Symbian|Opera Mini/.test(navigator.userAgent))
                 ) ||
-                (/IE /.test(navigator.userAgent) && /Trident\/[^345]/.test(navigator.userAgent) );
+                (/IE /.test(navigator.userAgent) && /Trident\/[^3]/.test(navigator.userAgent) );
             }
 
             function browserIsWhitelisted () {
@@ -262,8 +262,11 @@
                 // Safari iOS, only iPad with iOS >= 8
                 if (/iPad.*OS [^X34567]/.test(ua)) return true;
 
-                // IE Desktop >= 10
-                if (/IE /.test(ua) && /Trident\/[^345]/.test(ua)) return true;
+                // IE Desktop > 7 && <= 10
+                if (/IE /.test(ua) && /Trident\/[^3]/.test(ua)) return true;
+
+                // IE Desktop >= 11
+                if (/Trident\/[^3456]/.test(ua)) return true;
 
                 // No match found
                 return false;
@@ -300,8 +303,7 @@
                     'panels when they appear</span></div>';
 
                 html +=
-                    '<iframe src="http://bbc-vip.touchcast.com/embed/' +
-                    '<!--#echo var="TOUCHCAST_ID" -->" ' +
+                    '<iframe src="//bbc-vip.touchcast.com/sdk/demos/html5/bbc_v5/?performanceIds=<!--#echo var="TOUCHCAST_ID" -->&playfullscreen=1" ' +
                     'style="width:' + getTouchcastWidth() + 'px; ' +
                     'height:' + getTouchcastHeight() + 'px;" ' +
                     'class="touchcast-iframe" target="_blank" ' +
@@ -313,7 +315,7 @@
             }
 
             function displayTouchcastLink () {
-                touchcastContainer.html('<a href="http://bbc-vip.touchcast.com/embed/<!--#echo var="TOUCHCAST_ID" -->?autoplay=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>' + currentLangText.desc + '</strong></p>');
+                touchcastContainer.html('<a href="//bbc-vip.touchcast.com/sdk/demos/html5/bbc_v5/?performanceIds=<!--#echo var="TOUCHCAST_ID" -->&playfullscreen=1" class="touchcast-holder" target="_blank"><img src="<!--#echo var="IMAGE_URL" -->" /></a><p><strong>' + currentLangText.desc + '</strong></p>');
             }
 
             function resizeTouchcast () {
