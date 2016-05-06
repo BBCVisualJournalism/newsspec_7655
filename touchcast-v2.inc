@@ -236,6 +236,7 @@
                     (Function.prototype.bind) &&
                     !(/Ovi|Symbian|Opera Mini/.test(navigator.userAgent))
                 ) ||
+                (/iPhone.*OS [^X345678]/.test(navigator.userAgent)) ||
                 (/IE /.test(navigator.userAgent) && /Trident\/[^3]/.test(navigator.userAgent) );
             }
 
@@ -261,6 +262,9 @@
 
                 // Safari iOS, only iPad with iOS >= 8
                 if (/iPad.*OS [^X34567]/.test(ua)) return true;
+
+                // Safari iOS, only iPhone with iOS >= 9
+                if (/iPhone.*OS [^X345678]/.test(ua)) return true;
 
                 // IE Desktop > 7 && <= 10
                 if (/IE /.test(ua) && /Trident\/[^3]/.test(ua)) return true;
